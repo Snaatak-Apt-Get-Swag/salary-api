@@ -24,6 +24,14 @@ class SalaryApplicationTests {
     @MockBean
     private RedisCacheManager cacheManager;
 
+    
+    // Mock Cassandra beans
+    @MockBean
+    private CassandraTemplate cassandraTemplate;
+
+    @MockBean
+    private CassandraAdminTemplate cassandraAdminTemplate;
+
     @Test
     void contextLoads() {
         // Ensures Spring context starts successfully
