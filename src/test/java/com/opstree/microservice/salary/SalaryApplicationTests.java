@@ -6,7 +6,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(
+    webEnvironment = SpringBootTest.WebEnvironment.NONE,
+    properties = {
+        "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration"
+    }
+)
+
+
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SalaryApplicationTests {
 
     // Mock existing beans instead of redefining them
