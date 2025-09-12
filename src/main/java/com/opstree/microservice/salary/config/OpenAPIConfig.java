@@ -1,9 +1,6 @@
 package com.opstree.microservice.salary.swagger;
 
 import java.util.List;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,11 +12,17 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
 
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+
 @Configuration
 public class OpenAPIConfig {
 
-  @Bean
-  public CorsFilter corsFilter() {
+
+@Bean
+public CorsFilter corsFilter() {
   CorsConfiguration config = new CorsConfiguration();
   config.addAllowedOrigin("*");
   config.addAllowedMethod("*");
@@ -28,9 +31,11 @@ public class OpenAPIConfig {
   source.registerCorsConfiguration("/**", config);
   return new CorsFilter(source);
 }
+
+  @Bean
   public OpenAPI myOpenAPI() {
     Server devServer = new Server();
-    devServer.setUrl("http://13.48.67.195:8081");
+    devServer.setUrl("http://10.0.40.28:8082");
     devServer.setDescription("Server URL in Development environment");
 
     Contact contact = new Contact();
