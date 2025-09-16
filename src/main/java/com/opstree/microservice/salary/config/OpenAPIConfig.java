@@ -11,32 +11,26 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
-
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-
 @Configuration
 public class OpenAPIConfig {
-
-
-@Bean
-public CorsFilter corsFilter() {
-  CorsConfiguration config = new CorsConfiguration();
-  config.addAllowedOrigin("*");
-  config.addAllowedMethod("*");
-  config.addAllowedHeader("*");
-  UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-  source.registerCorsConfiguration("/**", config);
-  return new CorsFilter(source);
-}
 
   @Bean
   public OpenAPI myOpenAPI() {
     Server devServer = new Server();
-    devServer.setUrl("http://10.0.40.28:8082");
+    devServer.setUrl("http://13.200.245.13:8082");
     devServer.setDescription("Server URL in Development environment");
+
+    Server albServer = new Server();
+    albServer.setUrl("http://ot-ms-load-balancer-1191154576.ap-south-1.elb.amazonaws.com/swagger-ui/index.html");
+    albServer.setDescription("Server URL in Development environment");
+
+
+    Server albbServer = new Server();
+    albbServer.setUrl("http://ot-ms-load-balancer-1191154576.ap-south-1.elb.amazonaws.com/actuator/health");
+    albbServer.setDescription("Server URL in Development environment");
 
     Contact contact = new Contact();
     contact.setEmail("opensource@opstree.com");
@@ -52,6 +46,16 @@ public CorsFilter corsFilter() {
         .description("This API exposes endpoints to manage salary information.").termsOfService("https://www.opstree.com/terms")
         .license(mitLicense);
 
-    return new OpenAPI().info(info).servers(List.of(devServer));
+    return new OpenAPI().info(info).servers(List.of(devServer, albServer, albbServer));
   }
+  @Bean
+public CorsFilter corsFilter() {
+  CorsConfiguration config = new CorsConfiguration();
+  config.addAllowedOrigin("*");
+  config.addAllowedMethod("*");
+  config.addAllowedHeader("*");
+  UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+  source.registerCorsConfiguration("/**", config);
+  return new CorsFilter(source);
+}
 }
